@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Jenssegers\Mongodb\Eloquent\HybridRelations;
 use \Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User
@@ -15,9 +16,16 @@ use \Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class User extends Authenticatable
 {
-    use Notifiable, HybridRelations, SoftDeletes;
+    use Notifiable, HybridRelations, SoftDeletes, HasRoles;
 
     protected $connection = 'mysql';
+
+    /**
+     * Needed for the HasRoles trait
+     *
+     * @var string
+     */
+    protected $guard_name = 'web';
 
     /**
      * The attributes that are mass assignable.

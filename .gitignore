@@ -17,6 +17,5 @@ composer.lock
 /public/js/
 /public/css/
 /public/mix-manifest.json
-!/public/css/.gitkeep
-!/public/js/.gitkeep
 /_ide_helper.php
+!/**/.gitkeep
