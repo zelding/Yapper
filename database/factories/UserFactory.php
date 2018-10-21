@@ -16,8 +16,13 @@ use Faker\Generator as Faker;
 $factory->define(App\Entity\User::class, function (Faker $faker) {
     return [
         'name'           => $faker->name,
-        'display_name'   => $faker->firstName.$faker->numberBetween(67),
+        'display_name'   => $faker->firstName.$faker->numberBetween(3, 1967),
         'email'          => $faker->unique()->safeEmail,
-        'password'       => bcrypt($faker->vat)
+        'password'       => bcrypt($faker->hexColor.$faker->ipv6)
     ];
+});
+
+$factory->afterMaking(App\Entity\User::class, function (App\Entity\User $user, Faker $faker) {
+    $user->assignRole("user");
+    $user->save();
 });
