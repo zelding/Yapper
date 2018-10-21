@@ -146,10 +146,13 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        TwigBridge\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
+
+        TwigBridge\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -209,6 +212,8 @@ return [
         'Validator'    => Illuminate\Support\Facades\Validator::class,
         'View'         => Illuminate\Support\Facades\View::class,
         'Twig'         => TwigBridge\Facade\Twig::class,
+        'Debugbar'     => Barryvdh\Debugbar\Facade::class,
+        'Moloquent'    => Jenssegers\Mongodb\Eloquent\Model::class
     ],
 
 ];
