@@ -153,6 +153,7 @@ return [
         TwigBridge\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Jenssegers\Mongodb\MongodbQueueServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
 
         /*

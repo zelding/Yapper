@@ -17,11 +17,16 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string("display_name");
-            $table->string('email')->unique();
+            $table->string('email')
+                  ->unique();
             $table->string('password');
+            $table->boolean("notify", false)
+                  ->default(false);
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->index("notify");
         });
     }
 
