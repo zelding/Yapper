@@ -27,9 +27,6 @@ class HomeController extends Controller
     {
         // TODO: paginate
 
-        // SAME FUCKING SHIT
-        factory(\App\Entity\BlogPost::class, 5)->create();
-
         $recentPosts = BlogPost::with("author")
                                ->where('status', 1)
                                ->take(10)
