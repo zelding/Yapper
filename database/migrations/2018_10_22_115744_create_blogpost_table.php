@@ -1,10 +1,18 @@
 <?php
+/**
+ * Yapper
+ *
+ * @author    lyozsi (kristof.dekany@apex-it-services.eu)
+ * @copyright internal usage
+ *
+ * Date: 10/22/18 11:54 AM
+ */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJobsTable extends Migration
+class CreateBlogPostTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,20 +26,22 @@ class CreateJobsTable extends Migration
     {
         $schema = Schema::connection("mongodb");
 
-        $schema->create('jobs', function (Blueprint $table) {
+        $schema->create('blog_post', function (Blueprint $table) {
 
             // these are mostly just dummy pass-through calls
             // but they give a good idea what to expect
 
-            $table->string('queue');
-            $table->longText('payload');
-            $table->unsignedTinyInteger('attempts');
-            $table->unsignedInteger('reserved_at')
-                  ->nullable();
-            $table->unsignedInteger('available_at');
-            $table->unsignedInteger('created_at');
+            $table->string("title");
+            $table->string("summary");
+            $table->boolean("status")->default(false);
+            $table->text("content");
+            $table->integer("user_id")->nullable(false);
 
-            $table->index("queue");
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->index("user_id");
+            $table->index("status");
         });
     }
 
