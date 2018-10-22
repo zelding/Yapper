@@ -22,9 +22,12 @@ $factory->define(App\Entity\BlogPost::class, function (Faker $faker) use ($now) 
         "content"    => $faker->paragraphs(2, true),
         "status"     => 1,
         "user_id"    => mt_rand(1, 2),
-        "created_at" => $now->format('Y-m-d H:i:s'),
-        "updated_at" => null,
-        "deleted_at" => null
+        "created_at" => $faker->dateTimeBetween('-3 year'),
+        "updated_at" => $faker->dateTimeBetween('-1 year'),
+        // some might be deleted ;)
+        "deleted_at" => mt_rand(0, 10) % 7 === 0 ?
+            $faker->dateTimeBetween('-1 year') :
+            null
     ];
 });
 
@@ -37,11 +40,11 @@ $factory->afterMaking(App\Entity\BlogPost::class, function (App\Entity\BlogPost 
     $maxUserId = \App\Entity\User::max('id');
 
     $comment = new \App\Entity\Comment();
-
-
     // at this point the userIds should be continous
-    $comment->user_id = mt_rand(1, $maxUserId);
-    $comment->content = $faker->sentence(8, true);
-    $comment->post_id = $post->getAttribute('_id');
+    $comment->user_id    = mt_rand(1, $maxUserId);
+    $comment->content    = $faker->sentence(8, true);
+    $comment->post_id    = $post->getAttribute('_id');
+    $comment->created_at = $faker->dateTimeBetween('-1 year');
+    $comment->updated_at = null;
     $comment->save();
 });
