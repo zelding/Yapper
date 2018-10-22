@@ -9,6 +9,7 @@
  */
 
 namespace App\Entity;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -49,5 +50,10 @@ class BlogPost extends Eloquent
     public function author() : BelongsTo
     {
         return $this->belongsTo(User::class, "user_id", "id");
+    }
+
+    public function comments() : HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }
