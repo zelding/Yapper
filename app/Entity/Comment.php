@@ -5,27 +5,24 @@
  * @author    lyozsi (kristof.dekany@apex-it-services.eu)
  * @copyright internal usage
  *
- * Date: 10/21/18 11:36 AM
+ * Date: 10/22/18 3:15 PM
  */
 
 namespace App\Entity;
+
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class BlogPost
- *
+ * Class Comment
  *
  * @mixin Eloquent
  * @package App\Entity
  */
-class BlogPost extends Eloquent
+class Comment extends Eloquent
 {
-    use SoftDeletes;
-
     protected $connection = 'mongodb';
-    protected $collection = 'blog_post';
+    protected $collection = 'blog_comment';
 
     /**
      * The attributes that are mass assignable.
@@ -33,8 +30,7 @@ class BlogPost extends Eloquent
      * @var string[]
      */
     protected $fillable = [
-        'user_id', 'title', 'summary', 'content', 'status',
-        'created_at', 'updated_at', 'deleted_at'
+        'user_id', 'content'
     ];
 
     /**
@@ -43,10 +39,25 @@ class BlogPost extends Eloquent
      * @var string[]
      */
     protected $dates = [
-        'created_at', 'updated_at', 'deleted_at'
+        'created_at', 'updated_at'
     ];
 
-    public function author() : BelongsTo
+    /**
+     * the post its attached to
+     *
+     * @return BelongsTo
+     */
+    public function post() : BelongsTo
+    {
+        return $this->belongsTo(BlogPost::class);
+    }
+
+    /**
+     * The user that made the remark
+     *
+     * @return BelongsTo
+     */
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class, "user_id", "id");
     }

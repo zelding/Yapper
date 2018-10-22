@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlogPostTable extends Migration
+class CreateBlogPostCollection extends Migration
 {
-    protected $connection = 'mongodb';
+    protected $connection = 'mongodb'; // this does fuck-all
 
     /**
      * Run the migrations.
@@ -26,7 +26,9 @@ class CreateBlogPostTable extends Migration
      */
     public function up()
     {
-        Schema::create('blog_post', function (Blueprint $table) {
+        $schema = Schema::connection("mongodb");
+
+        $schema->create('blog_post', function (Blueprint $table) {
 
             // these are mostly just dummy pass-through calls
             // but they give a good idea what to expect
@@ -36,10 +38,10 @@ class CreateBlogPostTable extends Migration
             $table->boolean("status")->default(false);
             $table->text("content");
             $table->integer("user_id")->nullable(false);
-
             $table->softDeletes();
             $table->timestamps();
 
+            // these work
             $table->index("user_id");
             $table->index("status");
         });
@@ -52,6 +54,8 @@ class CreateBlogPostTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blog_post');
+        $schema = Schema::connection("mongodb");
+
+        $schema->dropIfExists('blog_post');
     }
 }

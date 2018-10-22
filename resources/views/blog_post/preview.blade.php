@@ -15,8 +15,16 @@
         <a href="{{ route('post.user', ['user' => $post->author->id]) }}">{{ $post->author->display_name }}</a>
 
         @can('add_comment')
-            <label for="comemnt">Add comment</label>
-            <input id="comment" title="yapp back please" type="text" name="comment" />
+            <form class="" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                @csrf
+                <div class="form-group">
+                    <label for="comment">Add comment</label>
+
+                    <textarea id="comment" title="yapp back please"
+                              class="form-control"
+                              type="text" name="comment"></textarea>
+                </div>
+            </form>
         @endcan
     </div>
 </section>

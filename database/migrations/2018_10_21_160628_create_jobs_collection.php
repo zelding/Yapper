@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJobsTable extends Migration
+class CreateJobsCollection extends Migration
 {
-    protected $connection = 'mongodb';
+    protected $connection = 'mongodb'; // this does fuck-all
 
     /**
      * Run the migrations.
@@ -18,7 +18,9 @@ class CreateJobsTable extends Migration
      */
     public function up()
     {
-        Schema::create('jobs', function (Blueprint $table) {
+        $schema = Schema::connection("mongodb");
+
+        $schema->create('jobs', function (Blueprint $table) {
 
             // these are mostly just dummy pass-through calls
             // but they give a good idea what to expect
@@ -42,6 +44,8 @@ class CreateJobsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jobs');
+        $schema = Schema::connection("mongodb");
+
+        $schema->dropIfExists('jobs');
     }
 }
