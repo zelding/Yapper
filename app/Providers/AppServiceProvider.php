@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Entity\BlogPost;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,7 +17,11 @@ class AppServiceProvider extends ServiceProvider
     {
         // this is where I'll add the sidebar things
 
-        View::share('sidebar', 'value');
+        $posts = BlogPost::all()->groupBy(function (BlogPost $post){
+            return $post->created_at->format('Y-m');
+        })->sortKeys(null, true);
+
+        View::share('sidebar', $posts);
     }
 
     /**

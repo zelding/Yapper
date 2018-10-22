@@ -26,7 +26,7 @@ class MongoDBCollectionSeeder extends Seeder
 
         $db->table("blog_post")->delete();
 
-        factory(App\Entity\BlogPost::class, 10)->create();
+        factory(App\Entity\BlogPost::class, 50)->create();
 
         // tell me for the love of god, why is everything deleted after this finishes?
         // unless I kill the script the collection becomes empty again
