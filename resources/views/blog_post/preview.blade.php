@@ -1,17 +1,22 @@
-@component('post_preview')
-    <section class="card mb-4">
-        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
 
-        <div class="card-body">
-            <h2 class="card-title">{{ $title }}</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+<section class="card mb-4">
+    <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
 
-            <a href="#" class="btn btn-primary">Read More →</a>
-        </div>
+    <div class="card-body">
+        <h2 class="card-title">{{ $post->title }}</h2>
+        <p class="card-text">{{ $post->summary }}</p>
 
-        <div class="card-footer text-muted">
-            Posted on January 1, 2017 by
-            <a href="#">Start Bootstrap</a>
-        </div>
-    </section>
-@endcomponent
+        <a href="{{ route('post.show', ['post' => $post->_id]) }}" class="btn btn-primary">{{__('Read on')}} →</a>
+    </div>
+
+    <div class="card-footer text-muted">
+        <time datetime="{{ $post->created_at->format('c') }}">{{ $post->created_at->format('F dS, Y') }}</time>
+        by
+        <a href="{{ route('post.user', ['user' => $post->author->id]) }}">{{ $post->author->display_name }}</a>
+
+        @can('add_comment')
+            <input title="yapp back please" type="text" name="comment" />
+        @endcan
+    </div>
+</section>
+

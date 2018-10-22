@@ -25,8 +25,13 @@ class HomeController extends Controller
      */
     public function index(Request $request) : View
     {
-        $recentPosts = BlogPost::all();
+        $recentPosts = BlogPost::with("author")
+                               ->take(10)
+                               ->orderBy('created_at', 'desc')
+                               ->get();
 
-        return view('home', compact($recentPosts));
+        return view('home', [
+            'posts' => $recentPosts
+        ]);
     }
 }

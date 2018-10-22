@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Entity\BlogPost;
+use App\Entity\User;
+use App\Http\Requests\StoreBlogPost;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class BlogPostController
@@ -14,17 +19,28 @@ class BlogPostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+
+        // not logged in or not admin
+        if ( !($user instanceof User && $user->hasRole("admin")) ) {
+            return redirect()->route('home')->with([
+                'error' => 'You don\'t have the required permissions to view that page'
+            ]);
+        }
+
+        $posts = BlogPost::all();
+
+        return view('blog_post.index', compact($posts));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -34,10 +50,10 @@ class BlogPostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  StoreBlogPost $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreBlogPost $request)
     {
         //
     }
@@ -46,7 +62,7 @@ class BlogPostController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -56,10 +72,10 @@ class BlogPostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param BlogPost $post
+     * @return Response
      */
-    public function edit($id)
+    public function edit(BlogPost $post)
     {
         //
     }
@@ -67,11 +83,12 @@ class BlogPostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request  $request
+     * @param BlogPost $post
+     *
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, BlogPost $post)
     {
         //
     }
@@ -80,10 +97,20 @@ class BlogPostController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Show posts of a given author
+     *
+     * @param User $user
+     */
+    public function user(User $user)
+    {
+
     }
 }

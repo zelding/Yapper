@@ -11,6 +11,7 @@
 namespace App\Entity;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class BlogPost
@@ -24,6 +25,8 @@ class BlogPost extends Eloquent
     use SoftDeletes;
 
     protected $connection = 'mongodb';
+    protected $collection = 'blog_post';
+
 
     /**
      * The attributes that are mass assignable.
@@ -42,4 +45,9 @@ class BlogPost extends Eloquent
     protected $dates = [
         'created_at', 'updated_at', 'deleted_at'
     ];
+
+    public function author() : BelongsTo
+    {
+        return $this->belongsTo(User::class, "user_id", "id");
+    }
 }
