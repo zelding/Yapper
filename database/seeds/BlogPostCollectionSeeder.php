@@ -27,9 +27,9 @@ class BlogPostCollectionSeeder extends Seeder
 
         $db->collection("blog_post")->delete();
 
-        //factory(App\Entity\BlogPost::class, 5)->create();
+        factory(App\Entity\BlogPost::class, 5)->create();
 
-        $now = new \DateTime();
+        //$now = new \DateTime();
 
         // as far as I was able to deduce, this is weh the actual document structure is fixed
         // it is certainly strange coming from relational databases

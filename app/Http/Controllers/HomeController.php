@@ -27,17 +27,8 @@ class HomeController extends Controller
     {
         // TODO: paginate
 
-        // why the fuck is it working here and not in the fcking seeder?!
-        \App\Entity\BlogPost::create([
-             "title"      => "Trying to save things here",
-             "summary"    => "It seems that DBeaver can only update one cell at the time",
-             "content"    => "MongoDB is a free and open-source cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemata. MongoDB is developed by MongoDB Inc., and is published under a combination of the Server Side Public License and the Apache License. ",
-             "status"     => 1,
-             "user_id"    => 1,
-             "created_at" => "2018-10-22 12:12:12",
-             "updated_at" => null,
-             "deleted_at" => null
-         ]);
+        // SAME FUCKING SHIT
+        factory(\App\Entity\BlogPost::class, 5)->create();
 
         $recentPosts = BlogPost::with("author")
                                ->where('status', 1)
