@@ -34,8 +34,6 @@ $factory->define(App\Entity\BlogPost::class, function (Faker $faker) use ($now) 
 // add some random comments from users
 $factory->afterMaking(App\Entity\BlogPost::class, function (App\Entity\BlogPost $post, Faker $faker) {
 
-    // TODO : create more comments
-
     $post->save();
     $post->refresh(); // if is this a hack then I'm sorry
 
