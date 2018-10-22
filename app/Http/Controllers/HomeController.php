@@ -27,7 +27,7 @@ class HomeController extends Controller
     {
         // TODO: paginate
 
-        $recentPosts = BlogPost::with("author", "comments.users")
+        $recentPosts = BlogPost::with("author", "comments.user")
                                ->where('status', 1)
                                ->take(10)
                                ->orderBy('created_at', 'desc')

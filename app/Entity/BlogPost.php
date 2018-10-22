@@ -25,6 +25,8 @@ class BlogPost extends Eloquent
 {
     use SoftDeletes;
 
+    protected $primaryKey = "_id"; // I don't know why is this lost during inheritence
+
     protected $connection = 'mongodb';
     protected $collection = 'blog_post';
 
@@ -54,6 +56,6 @@ class BlogPost extends Eloquent
 
     public function comments() : HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, "post_id");
     }
 }

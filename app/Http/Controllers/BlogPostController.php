@@ -67,6 +67,8 @@ class BlogPostController extends Controller
      */
     public function show(BlogPost $post)
     {
+        $post->load("comments.user");
+
         return view('blog_post.show', [
             "post" => $post
         ]);
