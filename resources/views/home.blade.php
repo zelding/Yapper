@@ -28,7 +28,7 @@
             @endforelse
         </div>
 
-        @include('sidebar')
+        @include('sidebar', ['data' => $sidebar])
     </div>
 </div>
 @endsection
