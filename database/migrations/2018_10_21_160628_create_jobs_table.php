@@ -6,6 +6,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateJobsTable extends Migration
 {
+    protected $connection = 'mongodb';
+
     /**
      * Run the migrations.
      *
@@ -16,9 +18,7 @@ class CreateJobsTable extends Migration
      */
     public function up()
     {
-        $schema = Schema::connection("mongodb");
-
-        $schema->create('jobs', function (Blueprint $table) {
+        Schema::create('jobs', function (Blueprint $table) {
 
             // these are mostly just dummy pass-through calls
             // but they give a good idea what to expect

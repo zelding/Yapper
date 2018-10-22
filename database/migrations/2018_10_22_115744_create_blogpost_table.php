@@ -14,6 +14,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateBlogPostTable extends Migration
 {
+    protected $connection = 'mongodb';
+
     /**
      * Run the migrations.
      *
@@ -24,9 +26,7 @@ class CreateBlogPostTable extends Migration
      */
     public function up()
     {
-        $schema = Schema::connection("mongodb");
-
-        $schema->create('blog_post', function (Blueprint $table) {
+        Schema::create('blog_post', function (Blueprint $table) {
 
             // these are mostly just dummy pass-through calls
             // but they give a good idea what to expect
@@ -52,6 +52,6 @@ class CreateBlogPostTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('blog_post');
     }
 }
