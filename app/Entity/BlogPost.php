@@ -15,6 +15,8 @@ use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 /**
  * Class BlogPost
  *
+ *
+ * @mixin Eloquent
  * @package App\Entity
  */
 class BlogPost extends Eloquent
