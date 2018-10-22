@@ -13,7 +13,7 @@ use Illuminate\Database\Seeder;
 /**
  * Class BlogPostTableSeeder
  */
-class BlogPostCollectionSeeder extends Seeder
+class MongoDBCollectionSeeder extends Seeder
 {
     /**
      * insert some dummy posts
@@ -29,7 +29,7 @@ class BlogPostCollectionSeeder extends Seeder
         factory(App\Entity\BlogPost::class, 10)->create();
 
         // tell me for the love of god, why is everything deleted after this finishes?
-        // unless I kill the script the table becomes empty again
+        // unless I kill the script the collection becomes empty again
         die;
     }
 }

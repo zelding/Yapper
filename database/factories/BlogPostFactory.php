@@ -28,7 +28,20 @@ $factory->define(App\Entity\BlogPost::class, function (Faker $faker) use ($now) 
     ];
 });
 
-/*$factory->afterMaking(App\Entity\User::class, function (App\Entity\User $user, Faker $faker) {
-    $user->assignRole("user");
-    $user->save();
-});*/
+// add some random comments from users
+$factory->afterMaking(App\Entity\BlogPost::class, function (App\Entity\BlogPost $post, Faker $faker) {
+
+    $post->save();
+    $post->refresh(); // if is this a hack then I'm sorry
+
+    $maxUserId = \App\Entity\User::max('id');
+
+    $comment = new \App\Entity\Comment();
+
+
+    // at this point the userIds should be continous
+    $comment->user_id = mt_rand(1, $maxUserId);
+    $comment->content = $faker->sentence(8, true);
+    $comment->post_id = $post->getAttribute('_id');
+    $comment->save();
+});

@@ -30,7 +30,8 @@ class Comment extends Eloquent
      * @var string[]
      */
     protected $fillable = [
-        'user_id', 'content'
+        'user_id', 'content', 'post_id',
+        'created_at', 'updated_at'
     ];
 
     /**
@@ -40,6 +41,15 @@ class Comment extends Eloquent
      */
     protected $dates = [
         'created_at', 'updated_at'
+    ];
+
+    /**
+     * updated timestamps on related entities
+     *
+     * @var string[]
+     */
+    protected $touches = [
+        'post'
     ];
 
     /**
