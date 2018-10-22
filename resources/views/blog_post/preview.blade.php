@@ -16,7 +16,8 @@
         by
         <a href="{{ route('post.user', ['user' => $post->author->id]) }}">{{ $post->author->display_name }}</a>
 
-        <a class="pull-right">{{ __('Comments') }}: 0</a>
+        <a href="{{ route('post.show', ['post' => $post->_id]) }}"
+           class="pull-right">{{ __('Comments') }}: {{ $post->comments->count() }}</a>
 
         @can('add_comment')
             <form class="" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">

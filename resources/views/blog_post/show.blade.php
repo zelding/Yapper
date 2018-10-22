@@ -32,7 +32,18 @@
                         by
                         <a href="{{ route('post.user', ['user' => $post->author->id]) }}">{{ $post->author->display_name }}</a>
 
-                        <a class="pull-right">{{ __('Comments') }}: 0</a>
+                        <span class="pull-right">{{ __('Comments') }}: {{ $post->comments->count() }}</span>
+
+                        <ul class="list-group mt-3 mb-3">
+                            @forelse($post->comments as $comment)
+                                <li class="list-group-item">
+                                    <strong class="pull-left">{{ $comment->user->display_name }}:</strong>
+                                    <span class="pull-right">{{$comment->content}}</span>
+                                </li>
+                            @empty
+                                <li class="list-group-item">No comments yet</li>
+                            @endforelse
+                        </ul>
 
                         @can('add_comment')
                             <form class="" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
@@ -45,19 +56,14 @@
                                               type="text" name="comment"></textarea>
                                 </div>
                             </form>
+                        @else
+                            <p>Log in or Register to comment</p>
                         @endcan
                     </div>
                 </section>
             </div>
 
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">{{__('Recent posts')}}</div>
-                    <div class="card-body">
-
-                    </div>
-                </div>
-            </div>
+            @include('sidebar')
         </div>
     </div>
 @endsection
