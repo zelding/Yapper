@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entity\BlogPost;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+
     }
 
     /**
@@ -24,6 +25,8 @@ class HomeController extends Controller
      */
     public function index(Request $request) : View
     {
-        return view('home');
+        $recentPosts = BlogPost::all();
+
+        return view('home', compact($recentPosts));
     }
 }
