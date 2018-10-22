@@ -23,9 +23,12 @@ class HomeController extends Controller
      *
      * @return View
      */
-    public function index(Request $request) : View
+    public function index(Request $request)
     {
+        // TODO: paginate
+
         $recentPosts = BlogPost::with("author")
+                               ->where('status', 1)
                                ->take(10)
                                ->orderBy('created_at', 'desc')
                                ->get();

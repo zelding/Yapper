@@ -1,6 +1,6 @@
 
 <section class="card mb-4">
-    <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+    <img class="card-img-top" src="https://via.placeholder.com/750x150?text={{ urlencode($post->title) }}" alt="Card image cap">
 
     <div class="card-body">
         <h2 class="card-title">{{ $post->title }}</h2>
@@ -15,8 +15,8 @@
         <a href="{{ route('post.user', ['user' => $post->author->id]) }}">{{ $post->author->display_name }}</a>
 
         @can('add_comment')
-            <input title="yapp back please" type="text" name="comment" />
+            <label for="comemnt">Add comment</label>
+            <input id="comment" title="yapp back please" type="text" name="comment" />
         @endcan
     </div>
 </section>
-

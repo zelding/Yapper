@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Entity\BlogPost;
 use App\Entity\User;
 use App\Http\Requests\StoreBlogPost;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -108,9 +109,21 @@ class BlogPostController extends Controller
      * Show posts of a given author
      *
      * @param User $user
+     * @return Response|View
      */
-    public function user(User $user)
+    public function user(User $user) : View
     {
+        // TODO: paginate
 
+        $recentPosts = BlogPost::with("author")
+                               ->where('user_id', $user->id)
+                               ->where('status', 1)
+                               ->take(10)
+                               ->orderBy('created_at', 'desc')
+                               ->get();
+
+        return view('home', [
+            'posts' => $recentPosts
+        ]);
     }
 }

@@ -27,7 +27,6 @@ class BlogPost extends Eloquent
     protected $connection = 'mongodb';
     protected $collection = 'blog_post';
 
-
     /**
      * The attributes that are mass assignable.
      *

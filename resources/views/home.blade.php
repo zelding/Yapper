@@ -16,9 +16,16 @@
                 </div>
             @endif
 
-            @foreach($posts as $post)
+            @forelse($posts as $post)
                 @include('blog_post.preview', ['post' => $post])
-            @endforeach
+            @empty
+                <div class="card">
+                    <div class="card-header">{{__('No posts found')}}</div>
+                    <div class="card-body">
+                        <p>Sorry about that</p>
+                    </div>
+                </div>
+            @endforelse
         </div>
 
         <div class="col-md-4">
