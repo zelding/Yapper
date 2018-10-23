@@ -6,6 +6,7 @@ use App\Entity\BlogPost;
 use App\Entity\User;
 use App\Http\Requests\DeleteBlogPost;
 use App\Http\Requests\StoreBlogPost;
+use App\Http\Requests\UndeleteBlogPost;
 use App\Http\Requests\UpdateBlogPost;
 use App\Jobs\SendMail;
 use Carbon\Carbon;
@@ -143,6 +144,23 @@ class BlogPostController extends Controller
 
         return redirect()->route('home')
                          ->with('status', 'Deleted successfully');
+    }
+
+    /**
+     * Restore a soft-deleted post
+     *
+     * @param UndeleteBlogPost $request
+     * @param BlogPost         $post
+     *
+     * @return RedirectResponse
+     */
+    public function undelete(UndeleteBlogPost $request, BlogPost $post) : RedirectResponse
+    {
+        $post->deleted_at = null;
+        $post->save();
+
+        return redirect()->route('post.show', ['post' => $post])
+                         ->with('status', 'Restored successfully');
     }
 
     /**

@@ -4,12 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class DeleteBlogPost
- *
- * @package App\Http\Requests
- */
-class DeleteBlogPost extends FormRequest
+class UndeleteBlogPost extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +24,7 @@ class DeleteBlogPost extends FormRequest
     public function rules()
     {
         return [
-            //"deleted_at" => // has to be null, I don't have time to create a custom validation rule for this
+            //'deleted_at' => '' // again, this need a custom validation rule, since the value can be null
         ];
     }
 }

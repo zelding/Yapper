@@ -55,14 +55,27 @@
 
     <hr>
 
-    <form action="{{ route('post.destroy', ['post' => $post]) }}" method="post">
-        @csrf
-        @method('DELETE')
+    @if($post->deleted_at === null)
+        <form action="{{ route('post.destroy', ['post' => $post]) }}" method="post">
+            @csrf
+            @method('DELETE')
 
-        <div class="row">
-            <div class="col-md-2 offset-10">
-                <button class="btn btn-danger pull-right">DELETE</button>
+            <div class="row">
+                <div class="col-md-2 offset-10">
+                    <button class="btn btn-danger pull-right">DELETE</button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    @else
+        <form action="{{ route('post.undelete', ['post' => $post]) }}" method="post">
+            @csrf
+            @method('PATCH')
+
+            <div class="row">
+                <div class="col-md-2 offset-10">
+                    <button class="btn btn-warning pull-right">Restore</button>
+                </div>
+            </div>
+        </form>
+    @endif
 @endsection

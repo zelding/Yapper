@@ -19,6 +19,8 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('/post', 'BlogPostController');
 
+Route::patch('/post/{post}', 'BlogPostController@undelete')->name('post.undelete');
+
 Route::resource('/user', 'UserController');
 
 Route::get('/posts/user/{user}', 'BlogPostController@user')->name('post.user');
