@@ -18,18 +18,5 @@
 
         <a href="{{ route('post.show', ['post' => $post->_id]) }}"
            class="pull-right">{{ __('Comments') }}: {{ $post->comments->count() }}</a>
-
-        @can('add_comment')
-            <form class="" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                @csrf
-                <div class="form-group">
-                    <label for="comment">Add comment</label>
-
-                    <textarea id="comment" title="yapp back please"
-                              class="form-control"
-                              type="text" name="comment"></textarea>
-                </div>
-            </form>
-        @endcan
     </div>
 </section>

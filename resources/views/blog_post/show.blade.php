@@ -68,14 +68,27 @@
             </ul>
 
             @can('add_comment')
-                <form class="" method="POST" action="{{ route('login') }}" aria-label="{{ __('Comment') }}">
+                @if ($errors->has('comment'))
+                    <div class="alert alert-danger">
+                        <strong>Error: </strong> {{ $errors->get('comment')[0] }}
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('comment.store', ['post' => $post]) }}" aria-label="{{ __('Comment') }}">
                     @csrf
+
                     <div class="form-group">
                         <label for="comment">Add comment</label>
 
                         <textarea id="comment" title="yapp back please"
-                                  class="form-control"
-                                  type="text" name="comment"></textarea>
+                                  class="form-control{{ $errors->has('comment') ? ' is-invalid' : '' }}"
+                                  type="text" name="comment">{{ old('comment') }}</textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 offset-6">
+                            <button class="btn btn-primary pull-right">Add Comment</button>
+                        </div>
                     </div>
                 </form>
             @else

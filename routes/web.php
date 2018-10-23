@@ -24,3 +24,5 @@ Route::patch('/post/{post}', 'BlogPostController@undelete')->name('post.undelete
 Route::resource('/user', 'UserController');
 
 Route::get('/posts/user/{user}', 'BlogPostController@user')->name('post.user');
+
+Route::resource('/post/{post}/comment', 'CommentController')->only(['store']);

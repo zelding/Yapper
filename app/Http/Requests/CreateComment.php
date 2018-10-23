@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class UpdateUser extends FormRequest
+class CreateComment extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,8 +13,7 @@ class UpdateUser extends FormRequest
      */
     public function authorize()
     {
-        // this was my best guess
-        return $this->user()->id === $this->route('user')->id;
+        return $this->user()->can('add_comment');
     }
 
     /**
@@ -26,9 +24,7 @@ class UpdateUser extends FormRequest
     public function rules()
     {
         return [
-            'name'         => 'required,max:255',
-            'display_name' => 'required',
-            'email'        => 'required,email,max:255'
+            'comment' => 'required,max:255'
         ];
     }
 }
