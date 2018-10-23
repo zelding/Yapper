@@ -24,23 +24,23 @@
 
         <div class="form-group">
             <label for="title">Title</label>
-            <input id="title" class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" value="{{ old('title', $post->title) }}">
+            <input id="title" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" name="title" value="{{ old('title', $post->title) }}">
         </div>
 
         <div class="form-group">
             <label for="summary">Summary</label>
-            <textarea id="summary" class="form-control {{ $errors->has('summary') ? ' is-invalid' : '' }}" name="summary">{{ old('summary', $post->summary) }}</textarea>
+            <textarea id="summary" class="form-control {{ $errors->has('summary') ? 'is-invalid' : '' }}" name="summary">{{ old('summary', $post->summary) }}</textarea>
         </div>
 
         <div class="form-group">
             <label for="content">Content</label>
-            <textarea id="content" class="form-control {{ $errors->has('content') ? ' is-invalid' : '' }}" name="content">{{ old('content', $post->content) }}</textarea>
+            <textarea id="content" class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content">{{ old('content', $post->content) }}</textarea>
         </div>
 
         <div class="form-check">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox"
-                       value="1" name="status" {{ old('status', $post->status) ? ' checked' : '' }}>
+                       value="1" name="status" {{ old('status', $post->status) ? 'checked' : '' }}>
                 Visible
             </label>
         </div>
