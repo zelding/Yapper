@@ -31,9 +31,9 @@ class UpdateBlogPost extends FormRequest
     public function rules()
     {
         return [
-            'title'   => 'required,max:255',
-            'summary' => 'required,max:255',
-            'content' => 'required'
+            'title'   => 'required|max:255',
+            'summary' => 'required|max:255',
+            'content' => 'required|string'
         ];
     }
 }
