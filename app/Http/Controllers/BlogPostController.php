@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Entity\BlogPost;
 use App\Entity\User;
 use App\Http\Requests\StoreBlogPost;
+use App\Http\Requests\UpdateBlogPost;
 use App\Jobs\SendMail;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
@@ -38,9 +39,9 @@ class BlogPostController extends Controller
     {
         // TODO: paginate
 
-        $posts = BlogPost::all();
+        $posts = BlogPost::withTrashed()->get();
 
-        return view('blog_post.index', compact($posts));
+        return view('blog_post.index', ['posts' => $posts]);
     }
 
     /**
@@ -102,20 +103,28 @@ class BlogPostController extends Controller
      */
     public function edit(BlogPost $post) : View
     {
-
+        return view('blog_post.edit', ['post' => $post]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request  $request
-     * @param BlogPost $post
+     * @param UpdateBlogPost  $request
+     * @param BlogPost        $post
      *
      * @return Response
      */
-    public function update(Request $request, BlogPost $post) : Response
+    public function update(UpdateBlogPost $request, BlogPost $post) : RedirectResponse
     {
-        //
+        $post->title      = $request->get('title');
+        $post->summary    = $request->get('summary');
+        $post->content    = $request->get('content');
+        $post->status     = $request->get('status');
+        $post->updated_at = new Carbon();
+        $post->save();
+
+        return redirect()->route('post.show', ['post' => $post])
+                         ->with('status', 'Updated successfully');
     }
 
     /**

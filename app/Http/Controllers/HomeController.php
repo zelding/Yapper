@@ -15,17 +15,19 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-
+        // guards, permissions ?
     }
 
     /**
      * Show the application dashboard.
      *
+     * @param Request $request future filters
+     *
      * @return View
      */
     public function index(Request $request) : View
     {
-        // TODO: paginate
+        // TODO: paginate, filter
 
         $recentPosts = BlogPost::with("author", "comments.user")
                                ->where('status', 1)
