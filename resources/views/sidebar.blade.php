@@ -6,7 +6,11 @@
         @role('admin')
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
+                    <a href="{{ route('post.index') }}" class="btn btn-outline-primary pull-left">Show all</a>
+                </div>
+
+                <div class="col-md-6">
                     <a href="{{ route('post.create') }}" class="btn btn-outline-primary pull-right">Create new post</a>
                 </div>
             </div>

@@ -5,13 +5,13 @@
     </a>
 
     <div class="card-body">
-        <h2 class="card-title">{{ $post->title }}</h2>
+        <h2 class="card-title {{ $post->deleted_at !== null ? 'bg-danger text-white' : ($post->status ? '' : 'bg-warning text-white') }}">{{ $post->title }}</h2>
         <p class="card-text">{{ $post->summary }}</p>
 
         <a href="{{ route('post.show', ['post' => $post->_id]) }}" class="btn btn-primary">{{__('Read on')}} →</a>
     </div>
 
-    <div class="card-footer text-muted">
+    <div class="card-footer">
         <time datetime="{{ $post->created_at->format('c') }}">{{ $post->created_at->format('F dS, Y') }}</time>
         by
         <a href="{{ route('post.user', ['user' => $post->author->id]) }}">{{ $post->author->display_name }}</a>

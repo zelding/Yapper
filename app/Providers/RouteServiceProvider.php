@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Entity\BlogPost;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,9 +25,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::bind('post', function ($value) {
+            if ( Auth::user()->hasRole('admin') ) {
+                return BlogPost::withTrashed()->find($value) ?? abort(404);
+            }
+            else {
+                return BlogPost::where('status', 1)->where('_id', $value) ?? abort(404);
+            }
+        });
     }
 
     /**

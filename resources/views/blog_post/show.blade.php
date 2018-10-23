@@ -15,13 +15,37 @@
         @endrole
     </div>
 
+    @role('admin')
+
+        <div class="row mt-3">
+
+            <div class="col-md-4">
+                <strong>Created: </strong> {{ $post->created_at->format('Y-m-d H:i:s') }}
+            </div>
+
+            @if($post->updated_at !== null)
+                <div class="col-md-4">
+                    <strong>Updated: </strong> {{ $post->updated_at->format('Y-m-d H:i:s') }}
+                </div>
+            @endif
+
+            @if($post->deleted_at !== null)
+                <div class="col-md-4">
+                    <strong>Deleted: </strong> {{ $post->deleted_at->format('Y-m-d H:i:s') }}
+                </div>
+            @endif
+
+        </div>
+
+    @endrole
+
     <section class="card mt-3">
         <a href="{{ route('post.show', ['post' => $post->_id]) }}">
             <img class="card-img-top" src="https://via.placeholder.com/750x150?text={{ urlencode($post->title) }}" alt="Card image cap">
         </a>
 
         <div class="card-body">
-            <h2 class="card-title">{{ $post->title }}</h2>
+            <h2 class="card-title {{ $post->deleted_at !== null ? 'bg-danger text-white' : ($post->status ? '' : 'bg-warning text-white') }}">{{ $post->title }}</h2>
             <article class="card-text">{{ $post->content }}</article>
         </div>
 
