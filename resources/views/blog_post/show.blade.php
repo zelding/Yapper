@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app_sidebar')
 
 @section('content')
 
@@ -6,6 +6,13 @@
         <div class="col-md-3">
             <a href="{{ route('home') }}" class="btn btn-outline-secondary">Back to home</a>
         </div>
+
+        @role('admin')
+            <div class="col-md-3 offset-6">
+                <a href="{{ route('post.edit', ['post' => $post]) }}"
+                   class="btn btn-outline-primary pull-right">Edit</a>
+            </div>
+        @endrole
     </div>
 
     <section class="card mt-3">
@@ -15,7 +22,7 @@
 
         <div class="card-body">
             <h2 class="card-title">{{ $post->title }}</h2>
-            <p class="card-text">{{ $post->content }}</p>
+            <article class="card-text">{{ $post->content }}</article>
         </div>
 
         <div class="card-footer text-muted">
@@ -37,7 +44,7 @@
             </ul>
 
             @can('add_comment')
-                <form class="" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                <form class="" method="POST" action="{{ route('login') }}" aria-label="{{ __('Comment') }}">
                     @csrf
                     <div class="form-group">
                         <label for="comment">Add comment</label>

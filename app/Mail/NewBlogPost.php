@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Entity\BlogPost;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -19,14 +20,17 @@ class NewBlogPost extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
+    /** @var BlogPost */
+    protected $post;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(BlogPost $post)
     {
-        //
+        $this->post = $post;
     }
 
     /**
@@ -36,6 +40,6 @@ class NewBlogPost extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('mail.new_post', ['post' => $this->post]);
     }
 }

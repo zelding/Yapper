@@ -29,8 +29,8 @@ class HomeController extends Controller
 
         $recentPosts = BlogPost::with("author", "comments.user")
                                ->where('status', 1)
-                               ->take(10)
                                ->orderBy('created_at', 'desc')
+                               ->take(10)
                                ->get();
 
         return view('home', [

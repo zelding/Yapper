@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Entity\BlogPost;
 use App\Entity\User;
 use App\Http\Requests\StoreBlogPost;
+use App\Jobs\SendMail;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -17,21 +20,23 @@ use Illuminate\Support\Facades\Auth;
  */
 class BlogPostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin')
+             ->except([
+                 'show',
+                 'user'
+             ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
+    public function index() : View
     {
-        $user = Auth::user();
-
-        // not logged in or not admin
-        if ( !($user instanceof User && $user->hasRole("admin")) ) {
-            return redirect()->route('home')->with([
-                'error' => 'You don\'t have the required permissions to view that page'
-            ]);
-        }
+        // TODO: paginate
 
         $posts = BlogPost::all();
 
@@ -54,9 +59,24 @@ class BlogPostController extends Controller
      * @param  StoreBlogPost $request
      * @return Response
      */
-    public function store(StoreBlogPost $request)
+    public function store(StoreBlogPost $request) : RedirectResponse
     {
-        //
+        $post = new BlogPost();
+        $post->title      = $request->get('title');
+        $post->summary    = $request->get('summary');
+        $post->content    = $request->get('content');
+        $post->user_id    = Auth::user()->id;
+        $post->status     = $request->get('status', 0);
+        $post->created_at = new Carbon();
+        $post->save();
+        $post->refresh();
+
+        if ( $post->status ) {
+            SendMail::dispatch($post);
+        }
+
+        return redirect()->route('post.show', ['post' => $post])
+                         ->with('status', 'saved successfully');
     }
 
     /**
@@ -65,7 +85,7 @@ class BlogPostController extends Controller
      * @param  BlogPost $post
      * @return Response
      */
-    public function show(BlogPost $post)
+    public function show(BlogPost $post) : View
     {
         $post->load("comments.user");
 
@@ -80,9 +100,9 @@ class BlogPostController extends Controller
      * @param BlogPost $post
      * @return Response
      */
-    public function edit(BlogPost $post)
+    public function edit(BlogPost $post) : View
     {
-        //
+
     }
 
     /**
@@ -93,7 +113,7 @@ class BlogPostController extends Controller
      *
      * @return Response
      */
-    public function update(Request $request, BlogPost $post)
+    public function update(Request $request, BlogPost $post) : Response
     {
         //
     }
@@ -104,7 +124,7 @@ class BlogPostController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id) : Response
     {
         //
     }

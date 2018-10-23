@@ -20,7 +20,7 @@ class StoreBlogPost extends FormRequest
      */
     public function authorize()
     {
-        return $this->user->hasRole("admin");
+        return $this->user()->hasRole("admin");
     }
 
     /**

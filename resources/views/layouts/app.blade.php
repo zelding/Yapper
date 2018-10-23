@@ -89,7 +89,7 @@
 
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
@@ -104,13 +104,8 @@
 
                         @yield('content')
                     </div>
-
-                    <div class="col-md-4">
-                        @include('sidebar', ['data' => $sidebar])
-                    </div>
                 </div>
             </div>
-
 
         </main>
     </div>

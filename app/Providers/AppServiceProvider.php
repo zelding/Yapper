@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // this is where I'll add the sidebar things
 
-        $posts = BlogPost::all()->groupBy(function (BlogPost $post){
+        $posts = BlogPost::where('status', 1)->get()->groupBy(function (BlogPost $post){
             return $post->created_at->format('Y-m');
         })->sortKeys(null, true);
 
