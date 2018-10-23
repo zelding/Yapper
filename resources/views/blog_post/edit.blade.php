@@ -52,4 +52,17 @@
         </div>
 
     </form>
+
+    <hr>
+
+    <form action="{{ route('post.destroy', ['post' => $post]) }}" method="post">
+        @csrf
+        @method('DELETE')
+
+        <div class="row">
+            <div class="col-md-2 offset-10">
+                <button class="btn btn-danger pull-right">DELETE</button>
+            </div>
+        </div>
+    </form>
 @endsection

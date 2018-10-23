@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entity\BlogPost;
 use App\Entity\User;
+use App\Http\Requests\DeleteBlogPost;
 use App\Http\Requests\StoreBlogPost;
 use App\Http\Requests\UpdateBlogPost;
 use App\Jobs\SendMail;
@@ -130,12 +131,18 @@ class BlogPostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  DeleteBlogPost $request
+     * @param  BlogPost       $post
+     *
      * @return Response
      */
-    public function destroy($id) : Response
+    public function destroy(DeleteBlogPost $request, BlogPost $post) : RedirectResponse
     {
-        //
+        $post->deleted_at = new Carbon();
+        $post->save();
+
+        return redirect()->route('home')
+                         ->with('status', 'Deleted successfully');
     }
 
     /**
