@@ -41,11 +41,11 @@ class BlogPostController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Response|View
      */
-    public function create()
+    public function create() : View
     {
-        //
+        return view('blog_post.create');
     }
 
     /**
@@ -62,7 +62,7 @@ class BlogPostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  BlogPost $post
      * @return Response
      */
     public function show(BlogPost $post)

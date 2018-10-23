@@ -86,7 +86,32 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-warning" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
+                        @yield('content')
+                    </div>
+
+                    <div class="col-md-4">
+                        @include('sidebar', ['data' => $sidebar])
+                    </div>
+                </div>
+            </div>
+
+
         </main>
     </div>
 </body>
