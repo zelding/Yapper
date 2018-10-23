@@ -12,7 +12,6 @@ use App\Jobs\SendMail;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -121,7 +120,7 @@ class BlogPostController extends Controller
         $post->title      = $request->get('title');
         $post->summary    = $request->get('summary');
         $post->content    = $request->get('content');
-        $post->status     = $request->get('status');
+        $post->status     = $request->get('status', 0);
         $post->updated_at = new Carbon();
         $post->save();
 
@@ -157,6 +156,7 @@ class BlogPostController extends Controller
     public function undelete(UndeleteBlogPost $request, BlogPost $post) : RedirectResponse
     {
         $post->deleted_at = null;
+        $post->status = 0;
         $post->save();
 
         return redirect()->route('post.show', ['post' => $post])

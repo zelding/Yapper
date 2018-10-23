@@ -28,12 +28,12 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::bind('post', function ($value) {
-            if ( Auth::user()->hasRole('admin') ) {
+            if ( Auth::user() !== null && Auth::user()->hasRole('admin') ) {
                 return BlogPost::withTrashed()->find($value) ?? abort(404);
             }
-            else {
-                return BlogPost::where('status', 1)->where('_id', $value) ?? abort(404);
-            }
+
+            return BlogPost::where('status', 1)->where('_id', $value)->first();// ?? abort(404);
+
         });
     }
 
