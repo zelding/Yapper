@@ -14,7 +14,7 @@
     <div class="card-footer">
         <time datetime="{{ $post->created_at->format('c') }}">{{ $post->created_at->format('F dS, Y') }}</time>
         by
-        <a href="{{ route('post.user', ['user' => $post->author->id]) }}">{{ $post->author->display_name }}</a>
+        <a href="{{ route('user.show', ['user' => $post->author]) }}">{{ $post->author->display_name }}</a>
 
         <a href="{{ route('post.show', ['post' => $post->_id]) }}"
            class="pull-right">{{ __('Comments') }}: {{ $post->comments->count() }}</a>

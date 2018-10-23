@@ -84,7 +84,7 @@ class User extends Authenticatable
         'created_at', 'updated_at', 'deleted_at'
     ];
 
-    public function blogPosts() : HasMany
+    public function posts() : HasMany
     {
         return $this->hasMany(BlogPost::class);
     }

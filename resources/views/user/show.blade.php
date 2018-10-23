@@ -57,4 +57,10 @@
         </div>
     </section>
 
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <a href="{{ route('post.user', ['user' => $user]) }}" class="btn btn-secondary">Posts ({{ $user->posts->count() }})</a>
+        </div>
+    </div>
+
 @endsection
