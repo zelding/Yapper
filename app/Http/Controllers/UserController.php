@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Entity\User;
+use App\Http\Requests\UpdateUser;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -59,24 +61,30 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('user.edit', ['user' => $user]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param UpdateUser $request
+     * @param User       $user
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUser $request, User $user) : RedirectResponse
     {
-        //
+        $user->name         = $request->get('name');
+        $user->display_name = $request->get('display_name');
+        $user->email        = $request->get('email');
+        $user->notify       = $request->get('notify', 0);
+
+        $user->save();
+
+        return redirect()->route('user.show', ['user' => $user]);
     }
 
     /**

@@ -43,7 +43,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <strong>Newsletter: </strong> {{ $user->notofy ? 'Yes' : 'No' }}
+                        <strong>Newsletter: </strong> {{ $user->notify ? 'Yes' : 'No' }}
                     </div>
                 </div>
 
